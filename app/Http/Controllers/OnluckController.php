@@ -545,6 +545,26 @@ class OnluckController extends Controller
         }
         return json_encode($response);
     }
+    public function CreateOnluckMetadataFile(){
+        $response = array();
+        $response['status']="OK";
+        $metadata = new stdClass();
+        $metadata->active_season = 0;
+        $metadata->pointed_season = 0;
+        $metadata->season_uptodate_token = 0;
+        $metadata->activation_code = 0;
+        $metadata->uptodate_token = 0;
+        $metadata->quote = "";
+        $metadata->intro_content = "";
+        $metadata->guideline_content = "";
+        Storage::disk('local')->put('onluck.json',json_encode($metadata));
+        try{
+            $response['data'] = json_decode(Storage::disk('local')->get('onluck.json'));
+        }catch(\Exception $e){
+            $response['status']=$e->getMessage();
+        }
+        return json_encode($response);
+    }
     public function GetOnluckMetadata(){
         $response = array();
         $response['status']="OK";

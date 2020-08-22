@@ -48,6 +48,7 @@ Route::post('onluck/updateseason','OnluckController@UpdateSeason');
 Route::post('onluck/updatepack','OnluckController@UpdatePack');
 Route::post('onluck/updatequestion','OnluckController@UpdateQuestion');
 
+Route::get('onluck/createonluckmetadata','OnluckController@CreateOnluckMetadata');
 Route::get('onluck/getonluckmetadata','OnluckController@GetOnluckMetadata');
 Route::post('onluck/storemetadata','OnluckController@StoreMetadata');
 Route::get('onluck/changeseason','OnluckController@ChangeSeason');
