@@ -1030,7 +1030,7 @@ class OnluckController extends Controller
                             foreach($images as $image){
                                 try{
                                     unlink(public_path($image));
-                                }catch(\Exception $){}
+                                }catch(\Exception $e){}
                             }                        
                             $question->delete();
                         }
@@ -1040,14 +1040,14 @@ class OnluckController extends Controller
                             foreach($images as $image){
                                 try{
                                     unlink(public_path($image));
-                                }catch(\Exception $){}
+                                }catch(\Exception $e){}
                             }                      
                             $question->delete();
                         }
                     }
                     try{
                         unlink(public_path($pack->icon));
-                    }catch(\Exception $){}
+                    }catch(\Exception $e){}
                     $pack->delete();
                 }
                 $season->delete();
