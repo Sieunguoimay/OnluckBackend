@@ -305,6 +305,7 @@ class OnluckController extends Controller
         return json_encode($response);
     }
     
+    //getuser data with correct questions count
     public function GetUsers(){
         $response = array();
         $response['status']="OK";
@@ -312,8 +313,6 @@ class OnluckController extends Controller
         $users = User::all();
 
         foreach($users as $user){
-            $vendor = AuthVendor::where([['user_id','=',$user->id],['vendor_name','=',$user->last_active_vendor_name]])->first();
-            $user->playingData = $user->playingData();
             $vendor = AuthVendor::where([['user_id','=',$user->id],['vendor_name','=',$user->last_active_vendor_name]])->first();
             $playingData = PlayingData::select('total_score','id')->where('user_id',$user->id)->first();
             $user['profile_picture'] = $vendor->profile_picture;
@@ -326,6 +325,8 @@ class OnluckController extends Controller
             $user->current_question_indices = CurrentQuestionIndex::where('playing_data_id',$playingData->id)->whereIn('pack_id',$packs)->pluck('index');
             $user->correct_answer_count = count(QuestionPlayingData::select('status')
                     ->where([['playing_data_id','=',$playingData->id],['season_id','=',$season_id],['status','=',99]])->get());
+            unset($user->created_at);        
+            unset($user->updated_at);        
         }
 
         $response["data"] = $users;
@@ -338,7 +339,17 @@ class OnluckController extends Controller
             $userId = $request->query('id');
             $user = User::find($userId);
             if($user!=null){
-                AuthVendor::where('user_id','=',$userId)->delete();
+                $authVendors = AuthVendor::where('user_id',$userId);
+                foreach($authVendors as $authVendor){
+                    try{
+                        unlink(public_path($authVendor->profile_picture));
+                    }catch(\Exception $e){}
+                    $authVendor->delete();
+                }
+                $playingData = PlayingData::where('user_id',$userId)->first();
+                CurrentQuestionIndex::where('playing_data_id',$playingData->id)->delete();
+                QuestionPlayingData::where('playing_data_id',$playingData->id)->delete();
+                $playingData->delete();
                 $user->delete();
             }else{
                 $response['status']="User Id Not found";
@@ -626,7 +637,9 @@ class OnluckController extends Controller
                     // $response['status']=$e->getMessage();
                 }
             }else{
-                $response['status']="User with id $user->id not found";
+                $response['status']="User with id $request->user_id not found";
+                $userData = new \stdClass();
+                $userData->uptodate_token = -1;
             }
         }else{
             $response['status']='Missing parameter user_id';

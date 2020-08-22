@@ -167,7 +167,7 @@ Client.DisplayUserInfo = function(user){
                 '</div>'+
                 '<div class="col-9 px-1">'+
                     '<div class="h3">'+user.name+'</div>'+
-                    '<div class="p"><strong>Started From: </strong>'+formatDate(user.create_at)+'</div>'+
+                    '<div class="p"><strong>Started From: </strong>'+formatDate(user.created_at)+'</div>'+
                     '<div class="p"><strong>Score: </strong>'+user.score+'</div>'+
                 '</div>'+
                 '<div style="position:absolute;right:0px;top:0px"><i style="cursor:pointer" class="fas fa-window-close" id="close_user_info_panel_button"></i>'+
