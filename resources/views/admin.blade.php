@@ -340,8 +340,10 @@ Client.DisplaySeasonList = function(){
 
 }
 Client.SeasonDataChanged = function(){
-    if(Client.seasonList[SeasonItemSelector.$element.attr('index')].id == Client.onluckMetadata.pointed_season){
-        Client.onluckMetadata.activation_code = -1;
+    if(SeasonItemSelector.$element!=null){
+        if(Client.seasonList[SeasonItemSelector.$element.attr('index')].id == Client.onluckMetadata.pointed_season){
+            Client.onluckMetadata.activation_code = -1;
+        }
     }
     Client.DisplaySeasonList();
 }
