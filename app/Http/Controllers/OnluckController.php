@@ -548,7 +548,7 @@ class OnluckController extends Controller
     public function CreateOnluckMetadata(){
         $response = array();
         $response['status']="OK";
-        $metadata = new stdClass();
+        $metadata = new \stdClass();
         $metadata->active_season = 0;
         $metadata->pointed_season = 0;
         $metadata->season_uptodate_token = 0;
