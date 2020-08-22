@@ -545,7 +545,7 @@ class OnluckController extends Controller
         }
         return json_encode($response);
     }
-    public function CreateOnluckMetadataFile(){
+    public function CreateOnluckMetadata(){
         $response = array();
         $response['status']="OK";
         $metadata = new stdClass();
