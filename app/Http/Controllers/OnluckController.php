@@ -310,7 +310,6 @@ class OnluckController extends Controller
         $response['status']="OK";
         
         $users = User::all();
-        $response["data"] = $users;
 
         foreach($users as $user){
             $vendor = AuthVendor::where([['user_id','=',$user->id],['vendor_name','=',$user->last_active_vendor_name]])->first();
@@ -327,6 +326,7 @@ class OnluckController extends Controller
                     ->where([['playing_data_id','=',$playingData->id],['season_id','=',$season_id],['status','=',99]])->get());
         }
 
+        $response["data"] = $users;
         return json_encode($response);
     }
     public function DeleteUser(Request $request){

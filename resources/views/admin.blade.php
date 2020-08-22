@@ -158,7 +158,7 @@ function formatDate(str){
     return date.getDay()+"/"+date.getMonth()+"/"+date.getFullYear();
 }
 Client.DisplayUserInfo = function(user){
-    
+    console.log("user.create_at",user.create_at);
     $('#user_info_panel').html(
         '<div class="container">'+
             '<div class="row">'+
@@ -272,6 +272,7 @@ Client.Init = function(){
 }
 function LoadUserList(){
     $.get(Client.baseUrl+'/getusers',function(response){
+        console.log(response);
         var json = JSON.parse(response);
         if(json.status == "OK"){
             Client.userList = json.data;
