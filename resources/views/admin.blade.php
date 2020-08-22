@@ -158,7 +158,7 @@ function formatDate(str){
     return date.getDay()+"/"+date.getMonth()+"/"+date.getFullYear();
 }
 Client.DisplayUserInfo = function(user){
-    console.log("user.create_at",user.created_at);
+    console.log("user.created_at",user.created_at);
     $('#user_info_panel').html(
         '<div class="container">'+
             '<div class="row">'+
