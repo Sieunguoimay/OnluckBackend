@@ -41,6 +41,6 @@ class User extends Authenticatable
         return $this->hasMany('App\AuthVendor');
     }
     public function playingData(){
-        return $this->hasOne('App\PlayingData');
+        return $this->hasOne('App\PlayingData','user_id','id');
     }
 }

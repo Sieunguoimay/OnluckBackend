@@ -313,7 +313,7 @@ class OnluckController extends Controller
 
         foreach($users as $user){
             $vendor = AuthVendor::where([['user_id','=',$user->id],['vendor_name','=',$user->last_active_vendor_name]])->first();
-            $user->testVendors = $user->authVendors();
+            $user->playingData = $user->playingData();
             $vendor = AuthVendor::where([['user_id','=',$user->id],['vendor_name','=',$user->last_active_vendor_name]])->first();
             $playingData = PlayingData::select('total_score','id')->where('user_id',$user->id)->first();
             $user['profile_picture'] = $vendor->profile_picture;
