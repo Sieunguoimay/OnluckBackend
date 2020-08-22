@@ -1138,17 +1138,24 @@ class OnluckController extends Controller
         $response = array();
         $response['status']="OK";
         $metadata = $this->getMetadata();
-        $season = Season::find($metadata->active_season);
-        $packs = Pack::where('season_id',$season->id)->get();
-        foreach ($packs as $pack){
-            if($pack->question_type=="0"){
-                $pack->typed_questions = TypedQuestion::where('pack_id',$pack->id)->get();
-            }else if($pack->question_type=="1"){
-                $pack->mcq_questions = McqQuestion::where('pack_id',$pack->id)->get();
+        if($metadata->active_season != 0){
+            $season = Season::find($metadata->active_season);
+            unset($season->created_at);
+            unset($season->updated_at);
+            $packs = Pack::select(['id','season_id','title','sub_text','icon','question_type'])
+                ->where('season_id',$season->id)->get();
+            foreach ($packs as $pack){
+                if($pack->question_type=="0"){
+                    $pack->typed_questions = TypedQuestion::where('pack_id',$pack->id)->get();
+                }else if($pack->question_type=="1"){
+                    $pack->mcq_questions = McqQuestion::where('pack_id',$pack->id)->get();
+                }
             }
+            $season->packs = $packs;
+            $response['data'] = $season;
+        }else{
+            $response['status']="Season not found";
         }
-        $season->packs = $packs;
-        $response['data'] = $season;
         return json_encode($response);
     }
 
