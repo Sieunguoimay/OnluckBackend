@@ -932,7 +932,11 @@ class OnluckController extends Controller
                                 $tobeDeletedImageIndices = json_decode($request->tobedeleted_images);
                                 foreach($tobeDeletedImageIndices as $index){
                                     if($existingImages[$index]!=null){
-                                        unlink(public_path($existingImages[$index]));
+                                        try{
+                                            unlink(public_path($existingImages[$index]));
+                                        }catch(\Exception $e){
+
+                                        }
                                         unset($existingImages[$index]);
                                     }
                                 }
@@ -957,7 +961,10 @@ class OnluckController extends Controller
                                 $tobeDeletedImageIndices = json_decode($request->tobedeleted_images);
                                 foreach($tobeDeletedImageIndices as $index){
                                     if($existingImages[$index]!=null){
-                                        unlink(public_path($existingImages[$index]));
+                                        try{
+                                            unlink(public_path($existingImages[$index]));
+                                        }catch(\Exception $e){
+                                        }
                                         unset($existingImages[$index]);
                                     }
                                 }
@@ -1021,7 +1028,9 @@ class OnluckController extends Controller
                         foreach(TypedQuestion::where('pack_id',$pack->id)->get() as $question){
                             $images = json_decode($question->images);
                             foreach($images as $image){
-                                unlink(public_path($image));
+                                try{
+                                    unlink(public_path($image));
+                                }catch(\Exception $){}
                             }                        
                             $question->delete();
                         }
@@ -1029,12 +1038,16 @@ class OnluckController extends Controller
                         foreach(McqQuestion::where('pack_id',$pack->id)->get() as $question){
                             $images = json_decode($question->images);
                             foreach($images as $image){
-                                unlink(public_path($image));
+                                try{
+                                    unlink(public_path($image));
+                                }catch(\Exception $){}
                             }                      
                             $question->delete();
                         }
                     }
-                    unlink(public_path($pack->icon));
+                    try{
+                        unlink(public_path($pack->icon));
+                    }catch(\Exception $){}
                     $pack->delete();
                 }
                 $season->delete();
@@ -1055,7 +1068,9 @@ class OnluckController extends Controller
                     foreach(TypedQuestion::where('pack_id',$pack->id)->get() as $question){
                         $images = json_decode($question->images);
                         foreach($images as $image){
-                            unlink(public_path($image));
+                            try{
+                                unlink(public_path($image));
+                            }catch(\Exception $e){}
                         }
                         $question->delete();
                     }
@@ -1063,12 +1078,16 @@ class OnluckController extends Controller
                     foreach(McqQuestion::where('pack_id',$pack->id)->get() as $question){
                         $images = json_decode($question->images);
                         foreach($images as $image){
-                            unlink(public_path($image));
+                            try{
+                                unlink(public_path($image));
+                            }catch(\Exception $e){}
                         }                      
                         $question->delete();
                     }
                 }
-                unlink(public_path($pack->icon));
+                try{
+                    unlink(public_path($pack->icon));
+                }catch(\Exception $e){}
                 $season_id = $pack->season_id;
                 $pack->delete();
                 $response['data'] = Pack::where('season_id',$season_id)->get()->values();
@@ -1089,7 +1108,9 @@ class OnluckController extends Controller
                         $question = TypedQuestion::find($request->id);
                         $images = json_decode($question->images);
                         foreach($images as $image){
-                            unlink(public_path($image));
+                            try{
+                                unlink(public_path($image));
+                            }catch(\Exception $e){}
                         }                        
                         $question->delete();
                         $response['data'] = TypedQuestion::where('pack_id',$request->pack_id)->get();
@@ -1097,7 +1118,9 @@ class OnluckController extends Controller
                         $question = McqQuestion::find($request->id);
                         $images = json_decode($question->images);
                         foreach($images as $image){
-                            unlink(public_path($image));
+                            try{
+                                unlink(public_path($image));
+                            }catch(\Exception $e){}
                         }                      
                         $question->delete();
                         $response['data'] = McqQuestion::where('pack_id',$request->pack_id)->get();
