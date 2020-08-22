@@ -325,7 +325,7 @@ class OnluckController extends Controller
             $user->current_question_indices = CurrentQuestionIndex::where('playing_data_id',$playingData->id)->whereIn('pack_id',$packs)->pluck('index');
             $user->correct_answer_count = count(QuestionPlayingData::select('status')
                     ->where([['playing_data_id','=',$playingData->id],['season_id','=',$season_id],['status','=',99]])->get());
-            unset($user->created_at);        
+            unset($user->updated_at);        
         }
 
         $response["data"] = $users;
