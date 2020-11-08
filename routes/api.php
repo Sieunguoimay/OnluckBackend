@@ -29,6 +29,7 @@ Route::get('onluck/resendverificaionemail','OnluckController@ResendVerificationE
 Route::get('onluck/verifyemail','OnluckController@VerifyEmail');
 Route::post('onluck/uploadphoto','OnluckController@UploadPhoto');
 Route::post('onluck/rename','OnluckController@Rename');
+Route::post('onluck/updateuser','OnluckController@UpdateUser');
 Route::get('onluck/getscoreboard','OnluckController@GetScoreboard');
 Route::get('onluck/getuser','OnluckController@GetUser');
 Route::get('onluck/checkuptodateuserdata','OnluckController@CheckUptodateUserData');
@@ -60,3 +61,5 @@ Route::post('onluck/storeplayingdata','OnluckController@StorePlayingData');
 Route::post('onluck/storeactivedata','OnluckController@StoreActiveData');
 
 
+Route::get('onluck/getquestionbyid','OnluckController@GetQuestionById');
+Route::post('onluck/submitquestionplayingdata','OnluckController@SubmitQuestionPlayingData');
